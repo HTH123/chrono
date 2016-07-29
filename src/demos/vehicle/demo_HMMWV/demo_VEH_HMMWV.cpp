@@ -31,9 +31,7 @@
 #include "chrono_vehicle/driver/ChIrrGuiDriver.h"
 #include "chrono_vehicle/driver/ChDataDriver.h"
 #include "chrono_vehicle/wheeled_vehicle/utils/ChWheeledVehicleIrrApp.h"
-
 #include "models/vehicle/hmmwv/HMMWV.h"
-
 using namespace chrono;
 using namespace chrono::vehicle;
 using namespace chrono::vehicle::hmmwv;
@@ -163,10 +161,9 @@ int main(int argc, char* argv[]) {
     // ------------------------
     // Create the driver system
     // ------------------------
-
+    
     // Create the interactive driver system
-    ChIrrGuiDriver driver(app);
-
+    ChIrrGuiDriverJoystick driver(app);
     // Set the time response for steering and throttle keyboard inputs.
     double steering_time = 1.0;  // time to go from 0 to +1 (or from 0 to -1)
     double throttle_time = 1.0;  // time to go from 0 to +1
@@ -179,7 +176,7 @@ int main(int argc, char* argv[]) {
     // force it to playback the driver inputs.
     if (driver_mode == PLAYBACK) {
         driver.SetInputDataFile(driver_file);
-        driver.SetInputMode(ChIrrGuiDriver::DATAFILE);
+        driver.SetInputMode(ChIrrGuiDriverJoystick::DATAFILE);
     }
 
     driver.Initialize();
