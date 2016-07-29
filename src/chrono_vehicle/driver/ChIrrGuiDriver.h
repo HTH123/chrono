@@ -92,7 +92,7 @@ class CH_VEHICLE_API ChIrrGuiDriver : public ChDriver, public irr::IEventReceive
     /// Return the current functioning mode as a string.
     std::string GetInputModeAsString() const;
 
-  private:
+  protected:
     ChVehicleIrrApp& m_app;
 
     double m_throttleDelta;
@@ -102,6 +102,31 @@ class CH_VEHICLE_API ChIrrGuiDriver : public ChDriver, public irr::IEventReceive
     InputMode m_mode;
     double m_time_shift;
     std::shared_ptr<ChDataDriver> m_data_driver;
+};
+
+class ChIrrGuiDriverJoystick : public ChIrrGuiDriver {
+  public:
+    enum InputMode {
+        LOCK,      ///< driver inputs locked at current values
+        KEYBOARD,  ///< driver inputs from keyboard
+        DATAFILE,  ///< driver inputs from data file
+        JOYSTICK   ///< driver inputs from joystick
+    };
+
+    ChIrrGuiDriverJoystick(ChVehicleIrrApp& app);
+
+    /// Intercept and process keyboard inputs.
+    virtual bool OnEvent(const irr::SEvent& event) override;
+
+    /// Return the current functioning mode as a string.
+    std::string GetInputModeAsString() const;
+
+    /// Set the current functioning mode.
+    void SetInputMode(InputMode mode);
+
+  private:
+    int m_dT;
+    double m_transmission;
 };
 
 /// @} vehicle_driver
