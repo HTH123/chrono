@@ -209,7 +209,7 @@ bool ChIrrGuiDriverJoystick::OnEvent(const SEvent& event) {
     double th = event.JoystickEvent.Axis[SEvent::SJoystickEvent::AXIS_Z] + SHRT_MAX;
     double br = event.JoystickEvent.Axis[SEvent::SJoystickEvent::AXIS_R] + SHRT_MAX;
     double new_steering = (double)event.JoystickEvent.Axis[irr::SEvent::SJoystickEvent::AXIS_X] / SHRT_MAX;
-    double new_throttle = (2 * SHRT_MAX - th) / (2 * SHRT_MAX);
+    double new_throttle = m_transmission * (2 * SHRT_MAX - th) / (2 * SHRT_MAX);
     double new_braking = (2 * SHRT_MAX - br) / (2 * SHRT_MAX);
 
     if (m_steering != new_steering)
